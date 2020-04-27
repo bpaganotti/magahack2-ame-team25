@@ -6,6 +6,7 @@ import { OptionCComponent } from "./pages/option-c/option-c.component";
 import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: "option-a",
     component: OptionAComponent,
