@@ -26,6 +26,10 @@ const routes: Routes = [
     component: HomeComponent,
     data: { state: "home" },
   },
+  { 
+    path: '**', 
+    component: HomeComponent 
+  },
 ];
 
 @NgModule({
