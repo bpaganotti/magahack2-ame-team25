@@ -9,6 +9,7 @@ import { OptionBComponent } from './pages/option-b/option-b.component';
 import { OptionCComponent } from './pages/option-c/option-c.component';
 import { IconLabComponent } from './components/icon-lab/icon-lab.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
