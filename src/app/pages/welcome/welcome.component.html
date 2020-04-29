@@ -23,7 +23,7 @@
         </div>
       </nz-content>
       <nz-footer style="margin-bottom:150px">
-        <nz-mention [nzSuggestions]="suggestions" [nzLoading]="loading" (nzOnSearchChange)="onSearchChange($event)" [nzPrefix]="['#', '@']>
+        <nz-mention [nzSuggestions]="suggestions" [nzLoading]="loading" (nzOnSearchChange)="onSearchChange($event)" [nzPrefix]="['#', '@']">
             <input nzMentionTrigger nz-input [(ngModel)]="inputValue" />
         </nz-mention>
       </nz-footer>
