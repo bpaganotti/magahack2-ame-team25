@@ -25,43 +25,30 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content >
   
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-
-    <ion-button (click)="toggleInfiniteScroll()" expand="block">
-      Toggle Infinite Scroll
-    </ion-button>
-    
-    <div id="card-container">
-      <ion-card padding *ngFor="let product of arrProducts"> 
-        <!-- <ion-img [src]="product.img"></ion-img> -->
-        <img src="{{product.img}}" />
-        <ion-card-header>
-          <ion-card-subtitle>{{product.name}}</ion-card-subtitle>
-          <ion-card-title>{{product.price}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          .
-        </ion-card-content>
-      </ion-card>
-  
+      <div class="menu-item card" *ngFor="let product of arrProducts" >
+        <ion-card padding > 
+          <!-- <ion-img [src]="product.img"></ion-img> -->
+          <img src="{{product.img}}" />
+          <ion-card-header>
+            <ion-card-subtitle>{{product.name}}</ion-card-subtitle>
+            <ion-card-title>{{product.price}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            .
+          </ion-card-content>
+        </ion-card>
+        </div>
+     
+       
       <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
           loadingSpinner="bubbles"
           loadingText="Loading more data...">
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </div>
-    
-
-  </div>
+      
 </ion-content>
 
 <ion-footer>
@@ -73,6 +60,7 @@
     placeholder="Buscar produtos, marcas, categorias ..."  
     animated="true"
     debounce="1000"
+    (ionInput)="LoadRemoteData()"
     search-icon="send-outline" 
     ></ion-searchbar>
   </ion-toolbar>

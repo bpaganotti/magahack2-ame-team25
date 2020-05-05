@@ -10,22 +10,32 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class HomePage {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
-  loading: boolean;
-  currentUser: any;
-
   private querySubscription: Subscription;
+  loading: boolean;
 
   inputValue: string;
   suggestions: string[] = [];
   arrProducts = [];
   arrItens = [];
 
-  filters = { loja: "3", page: 1, pageLength: 100, searchString: "", order:"ASC"}
+  filters = { lastSearchSting:"", loja: "3", page: 1, pageLength: 10, searchString: "", order:"ASC"}
 
-  query = gql`
+  
+constructor(private apollo: Apollo) {}
+
+  ngOnInit() {
+    this.LoadRemoteData();
+  }
+
+  GetQuery(){
+    return gql`
   query MyQuery {
-    products(order_by: {price: asc}, limit: ${this.filters.pageLength}) {
+    products(
+      order_by: {price: asc}, 
+      where: {name: {_ilike: "%${this.filters.searchString}%"}}, 
+      limit: ${this.filters.pageLength},
+      offset: ${(this.filters.page-1) * this.filters.pageLength}
+      ) {
       id
       img
       name
@@ -33,22 +43,39 @@ export class HomePage {
     }
   }
 `;
-constructor(private apollo: Apollo) {}
-
-  ngOnInit() {
-    this.LoadRemoteData();
   }
 
   LoadRemoteData(){
+
+    let bIncremental = true;
+    if(this.filters.searchString == this.filters.lastSearchSting){
+      this.filters.page++;
+    }
+    else{
+      bIncremental = false;
+      this.filters.page = 1;
+      this.filters.lastSearchSting = this.filters.searchString;
+    }
+
+    let query = this.GetQuery();
+
+    console.log('LoadRemoteData',bIncremental, query);
+
     this.querySubscription = this.apollo.watchQuery<any>({
-      query: this.query
+      query
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
         this.loading = loading;
-        this.arrProducts = data.products;
-        this.arrItens = this.arrProducts.slice(this.arrItens.length,this.arrItens.length+10);
-        console.log('produtos', this.arrProducts);
+
+        if(bIncremental){
+          data.products.forEach(p => {
+            this.arrProducts.push(p);
+          });
+        }
+        else{
+          this.arrProducts = data.products;
+        }
       });
   }
 
@@ -73,6 +100,7 @@ constructor(private apollo: Apollo) {}
       // if (data.length == 1000) {
       //   event.target.disabled = true;
       // }
+      this.LoadRemoteData();
     }, 500);
   }
 

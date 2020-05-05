@@ -1,8 +1,8 @@
 {
   "name": "25me",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "25.ME",
+  "homepage": "https://25me.netlify.app",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
