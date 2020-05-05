@@ -1,7 +1,7 @@
 {
   "name": "25.ME",
   "short_name": "25.ME",
-  "theme_color": "#1976d2",
+  "theme_color": "#E73631",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
